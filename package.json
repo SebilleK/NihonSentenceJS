@@ -1,0 +1,12 @@
+{
+	"name": "nihonsentencejs",
+	"version": "1.0.0",
+	"description": "a japanese scripts extractor and parser utility for subtitle files",
+	"main": "index.js",
+	"scripts": {
+		"start": "node main.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC"
+}
