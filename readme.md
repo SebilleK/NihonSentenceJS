@@ -1,36 +1,48 @@
 # NihonSentence
 
-NihonSentenceJS is a Japanese scripts extractor (hiragana, katakana and kanji). It reads all text files in an input folder and outputs the results into corresponding files in an output folder.
+NihonSentenceJS is a **Japanese scripts extractor** (hiragana, katakana and kanji) and **word parser** utility. It reads all text files in an input folder and **outputs** the results into corresponding **cleaned + word list files** in an output folder. Please check the **resources** below.
 
-This can be particulary useful to quickly extract sentences for sentence mining and creating your own vocabulary flashcards from subtitle files. See more at how to use this immersion method in the **notes** below.
+An example usage of this (and why I made it) is to quickly extract all usable sentences from subtitle files for **sentence mining** and/or **creating your own vocabulary flashcards**. See more about this immersion method in the **notes** below.
 
-## Usage
+## Setup/Usage
 
-1. Get some polluted text files that have japanese in them (for example, subtitle files, such as the ones included in the input folder)
+0. Get some polluted text files that have japanese in them
+   _(for example, subtitle files, such as the ones included in the input folder)_
 
-2. Clone the repo:
+![ExampleRaw](examples/raw.png)
+
+1. Clone the repo:
 
 ```bash
 git clone https://github.com/SebilleK/NihonSentence.git
 ```
 
-3. Put your text files (such as subtitles) in the input folder
+2. Put your text files in the input folder
 
-Example (part of input/example1.srt):
-![Example1](examples/raw.png)
-
-4. Run:
+3. Install dependencies and run the script
 
 ```bash
-python main.py
+# cd NihonSentenceJS
+npm install
+npm start # or node main.js
 ```
 
-5. Get output
+4. Get output!
 
-Example (part of the expected output of example1.srt):
-![Example2](examples/parsed1.png)
+The clean_example files are cleaned from everything but raw japanese sentences, and the parsed_example files have ALL the words extracted from their corresponding clean_example files.
 
-And you get a cleaned up file =)
+Use for sentences analyzing or mining
+![ExampleCleanParse](examples/clean.png)
+
+Use for making vocab lists or flashcards
+![ExampleWordParse](examples/parsed.png)
+
+## Resources
+
+- This project uses the "nlp-pattern-match" library for javascript available here:
+  https://github.com/azu/nlp-pattern-match
+
+For example usage, you can check out the exampleParser.js file included in the examples folder.
 
 ## Notes
 
@@ -41,8 +53,13 @@ And you get a cleaned up file =)
 
 1. Get subtitle files in japanese for it
 2. Parse them all through this
-3. Analyze them (maybe with the help of some extension like Rikaikun for Chrome) and Create Vocabulary flashcards from it (with Anki, by hand, ...)
+3. Analyze them (maybe with the help of some extension like Rikaikun for Chrome), use them for sentence mining, create vocabulary flashcards from them (with Anki, by hand, ...)
+
+I suggest making an Anki deck with select vocabulary, and then:
+
 4. Study those flashcards
 5. Watch the series again
 
 This can be a great method for maximizing your comprehensible input while immersing with a series you like!
+
+Thank you for browsing.

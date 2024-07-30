@@ -1,5 +1,6 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { japaneseParser } from './japaneseParser.js';
 
 // read a text file
 function readFile(filePath) {
@@ -25,21 +26,37 @@ function cleanExtraSpace(text) {
 }
 
 // process all files in specified folder
-function processFolder(inputFolder, outputFolder) {
+async function processFolder(inputFolder, outputFolder) {
 	if (!fs.existsSync(outputFolder)) {
 		fs.mkdirSync(outputFolder);
 	}
 
-	fs.readdirSync(inputFolder).forEach(fileName => {
+	const files = fs.readdirSync(inputFolder);
+
+	for (const fileName of files) {
 		const inputFilePath = path.join(inputFolder, fileName);
 		if (fs.lstatSync(inputFilePath).isFile()) {
-			let s = readFile(inputFilePath);
-			s = cleanExtraSpace(s);
-			const japaneseCharacters = extractJapaneseCharacters(s);
-			const outputFilePath = path.join(outputFolder, fileName);
-			fs.writeFileSync(outputFilePath, japaneseCharacters.join(''), 'utf8');
+			let fileContent = readFile(inputFilePath);
+			fileContent = cleanExtraSpace(fileContent);
+
+			// cleaning the text for characters only
+			const japaneseCharacters = extractJapaneseCharacters(fileContent);
+			const japaneseText = japaneseCharacters.join('');
+
+			// output -> cleaned text
+			const cleanOutputFilePath = path.join(outputFolder, `clean_${fileName}`);
+			fs.writeFileSync(cleanOutputFilePath, japaneseText, 'utf8');
+
+			try {
+				// parsing the text | output -> formatted text for words + readings
+				const formattedText = await japaneseParser(japaneseText);
+				const outputFilePath = path.join(outputFolder, `parsed_${fileName}`);
+				fs.writeFileSync(outputFilePath, formattedText, 'utf8');
+			} catch (error) {
+				console.error(`Error formatting text for file ${fileName}:`, error);
+			}
 		}
-	});
+	}
 }
 
 //! driver code
